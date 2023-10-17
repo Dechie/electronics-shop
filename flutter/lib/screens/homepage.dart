@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
+import 'package:mobile_shop/services/api_services.dart';
 import 'package:mobile_shop/widgets/elementary_item.dart';
 import 'package:mobile_shop/widgets/special_item.dart';
 
@@ -22,36 +23,14 @@ class _HomePageState extends State<HomePage> {
   List<Mobile> _mobileList = [];
 
   void _fetchMobiles() async {
-    final url = Uri.http('localhost:8000', '/api/mobiles');
-    print(url);
+    List<Mobile> mobile_list = [];
+    final api = ApiServices();
 
-    final response = await http.get(url);
-    print(response.statusCode);
-    print(response.body);
-    if (response.statusCode == 200) {
-      List<dynamic> responseData = json.decode(response.body);
-      List<Mobile> _fetchedList = [];
+    mobile_list = await api.fetchMobiles();
 
-      for (var item in responseData) {
-        _fetchedList.add(
-          Mobile(
-            title: item['title'],
-            status: item['status'],
-            price: item['price'],
-            battery: item['battery'],
-            quantity: item['quantity'],
-            storage: item['storage'],
-            ram: item['ram'],
-            cameraFront: item['front_camera'],
-            cameraBack: item['back_camera'],
-          ),
-        );
-      }
-
-      setState(() {
-        _mobileList = _fetchedList;
-      });
-    }
+    setState(() {
+      _mobileList = mobile_list;
+    });
   }
 
   @override
@@ -64,44 +43,75 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: mainGrey,
-      appBar: AppBar(
-        backgroundColor: mainRed,
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              const SearchBar(),
-              ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(myOrange)),
-                  onPressed: () {},
-                  child: const Icon(Icons.shopping_cart)),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Container(
-            margin: const EdgeInsets.only(left: 10),
-            child: CustomText(
-              text: 'Latest',
-              color: Colors.black,
-              size: 20,
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color: mainRed,
             ),
+            label: 'Home',
           ),
-          buildSpecialView(context, _mobileList),
-          Container(
-            margin: const EdgeInsets.only(left: 10),
-            child: CustomText(
-              text: 'All Categories',
-              color: Colors.black,
-              size: 20,
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.shopping_cart,
+              color: mainRed,
             ),
+            label: 'Cart',
           ),
-          buildGridView(context, _mobileList),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.star,
+              color: mainRed,
+            ),
+            label: 'Favorites',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person,
+              color: mainRed,
+            ),
+            label: 'Me',
+          ),
         ],
+      ),
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                const SearchBar(),
+                ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(myOrange)),
+                    onPressed: () {},
+                    child: const Icon(Icons.shopping_cart)),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Container(
+              margin: const EdgeInsets.only(left: 10),
+              child: CustomText(
+                text: 'Latest',
+                color: Colors.black,
+                size: 20,
+              ),
+            ),
+            buildSpecialView(context, _mobileList),
+            Container(
+              margin: const EdgeInsets.only(left: 10),
+              child: CustomText(
+                text: 'All Categories',
+                color: Colors.black,
+                size: 20,
+              ),
+            ),
+            buildGridView(context, _mobileList),
+          ],
+        ),
       ),
     );
   }
