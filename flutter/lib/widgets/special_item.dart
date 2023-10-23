@@ -19,37 +19,35 @@ class SpecialMobileItem extends StatelessWidget {
       ),
       width: 270,
       height: 135,
-      child: Expanded(
-        child: Stack(
-          alignment: AlignmentDirectional.center,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(18),
-              child: Image.asset(
-                'assets/images/iphone_14.jpg',
-                fit: BoxFit.cover,
-              ),
+      child: Stack(
+        alignment: AlignmentDirectional.center,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(18),
+            child: Image.asset(
+              'assets/images/iphone_14.jpg',
+              fit: BoxFit.cover,
             ),
-            Positioned(
-              top: 40,
-              left: 20,
-              child: CustomText(
-                text: 'Iphone 14 pro',
-                size: 20,
-                color: Colors.white,
-              ),
+          ),
+          Positioned(
+            top: 40,
+            left: 20,
+            child: CustomText(
+              text: 'Iphone 14 pro',
+              size: 20,
+              color: Colors.white,
             ),
-            Positioned(
-              bottom: 50,
-              right: 50,
-              child: CustomText(
-                text: 'Storage 256',
-                size: 16,
-                color: mainRed,
-              ),
+          ),
+          Positioned(
+            bottom: 50,
+            right: 50,
+            child: CustomText(
+              text: 'Storage 256',
+              size: 16,
+              color: mainRed,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

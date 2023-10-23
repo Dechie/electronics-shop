@@ -20,53 +20,84 @@ class ElementaryMobileItem extends StatelessWidget {
         color: Colors.white,
       ),
       width: 180,
-      height: 260,
+      height: 150,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: Image.asset(
-              'assets/images/s8.jpg',
-              width: 170,
-              height: 150,
-              fit: BoxFit.cover,
-            ),
+          Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Image.asset(
+                  'assets/images/s8.jpg',
+                  width: 170,
+                  height: 150,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned(
+                top: 0,
+                left: 0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.only(topLeft: Radius.circular(5)),
+                    color: myOrange,
+                  ),
+                  alignment: Alignment.center,
+                  width: 85,
+                  height: 20,
+                  child: CustomText(
+                      text: '${mobile.price} ETB', color: Colors.white),
+                ),
+              ),
+            ],
           ),
           CustomText(
             text: mobile.title,
             size: 16,
             color: mainRed,
           ),
-          RowText(
-            leftText: 'camera',
-            rightText: '${mobile.cameraFront} by ${mobile.cameraBack}',
-          ),
-          RowText(
-            leftText: 'storage',
-            rightText: '${mobile.storage} by ${mobile.ram}',
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
-                color: myOrange,
-                width: 85,
-                height: 15,
-                child: CustomText(
-                    text: '${mobile.price} ETB', color: Colors.white),
-              ),
-              GestureDetector(
-                onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('add to cart')));
-                },
-                child: const Icon(
-                  Icons.shopping_cart,
-                  color: mainRed,
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      const MaterialStatePropertyAll<Color>(mainRed),
+                  shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                  ),
+                  padding: const MaterialStatePropertyAll<EdgeInsetsGeometry>(
+                    EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                  ),
+                ),
+                onPressed: () {},
+                child: const Row(
+                  children: [Icon(Icons.info), Text('Info')],
                 ),
               ),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      const MaterialStatePropertyAll<Color>(mainRed),
+                  shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                  ),
+                  padding: const MaterialStatePropertyAll<EdgeInsetsGeometry>(
+                    EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                  ),
+                ),
+                onPressed: () {},
+                child: const Row(
+                  children: [Icon(Icons.shopping_cart), Text('Cart')],
+                ),
+              )
             ],
           ),
           const Spacer(),
