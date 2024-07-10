@@ -25,3 +25,6 @@ Route::get('mobile/{id}', [MobileController::class, 'show']);
 Route::post('mobiles', [MobileController::class, 'store']);
 Route::put('mobiles/{id}', [MobileController::class, 'update']);
 Route::delete('mobiles/{id}', [MobileController::class, 'delete']);
+
+Route::get('laptopes', [LaptopeController::class, 'index']);
+Route::get('laptope/{id}', [LaptopeController::class, 'show']);

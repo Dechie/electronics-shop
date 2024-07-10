@@ -21,13 +21,12 @@ class MobileTableSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             Mobile::create([
                 'title' => $faker->name(),
-                'status' => 'used',
                 'ram' => 4,
                 'storage' => $faker->numberBetween(32, 256),
+                'battery' => 3000,
                 'front_camera' => 5,
                 'back_camera' => 13,
                 'price' => $faker->numberBetween(10000, 20000),
-                'quantity' => $faker->numberBetween(0, 30),
             ]);
         }
     }

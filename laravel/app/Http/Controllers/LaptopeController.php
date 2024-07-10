@@ -3,19 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Mobile;
 
-class MobileController extends Controller
+class LaptopController extends Controller
 {
     //
-    public function index(){
-        $mobiles = Mobile::all();
-        //var_dump($mobiles);
-        return response()->json($mobiles);
+     public function index(){
+        return response()->json(Mobile::all());
     }
 
     public function show($id){
-        return Mobile::find($id);
+        return response()->json(['mobile' => Mobile::find($id)]);
     }
 
     public function store(Request $request){

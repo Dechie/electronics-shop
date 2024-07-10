@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_shop/screens/cart.dart';
-import 'package:mobile_shop/screens/profile_page.dart';
+
 import '../constants.dart';
 import 'home_screen.dart';
 
@@ -17,14 +17,7 @@ class MainPageState extends State<MainPage> {
   final _childScreens = <Widget>[
     const HomeScreen(),
     CartScreen(),
-    ProfileScreen(),
   ];
-
-  void onTabTap(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,5 +52,11 @@ class MainPageState extends State<MainPage> {
       ),
       body: _childScreens[_currentIndex],
     );
+  }
+
+  void onTabTap(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 }

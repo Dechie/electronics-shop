@@ -15,19 +15,7 @@ class ApiServices {
       List<dynamic> responseData = json.decode(response.body);
 
       for (var item in responseData) {
-        fetchedList.add(
-          Mobile(
-            title: item['title'],
-            status: item['status'],
-            price: item['price'],
-            battery: item['battery'],
-            quantity: item['quantity'],
-            storage: item['storage'],
-            ram: item['ram'],
-            cameraFront: item['front_camera'],
-            cameraBack: item['back_camera'],
-          ),
-        );
+        fetchedList.add(Mobile.fromJson(item));
       }
     }
 

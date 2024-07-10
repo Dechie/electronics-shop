@@ -11,18 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mobile', function (Blueprint $table) {
+        Schema::create('laptopes', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('title');
-            //$table->string('status');
             $table->integer('ram');
-            $table->integer('storage');
-            $table->integer('front_camera');
-            $table->integer('back_camera');
-            $table->integer('battery');
+            $table->string('storage');
+            $table->string('core');
             $table->double('price');
-            //$table->integer('quantity');
+            $table->timestamps();
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mobile');
+        Schema::dropIfExists('laptopes');
     }
 };

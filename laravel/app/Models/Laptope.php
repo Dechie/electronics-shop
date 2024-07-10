@@ -5,21 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Mobile extends Model
+class Laptope extends Model
 {
     use HasFactory;
-    protected $table = 'mobile';
 
+    protected $table = 'laptopes';
     protected $fillable = [
             'title',
-            //'status',
             'ram',
+            'model',
             'storage',
-            'front_camera',
-            'back_camera',
-            'battery',
+            'core',
             'price',
-            //'quantity',
     ]; 
-
 }
