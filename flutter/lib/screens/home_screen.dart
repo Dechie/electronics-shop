@@ -7,7 +7,7 @@ import 'package:mobile_shop/widgets/laptop_item.dart';
 import '../constants.dart';
 import '../models/laptop.dart';
 import '../models/mobile.dart';
-import '../services/providers.dart';
+import '../services/providers/product_providers.dart';
 import '../widgets/special_item.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -26,28 +26,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return SafeArea(
       child: SizedBox(
         height: size.height * .98,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(width: size.width * .8, child: const SearchBar()),
-                ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor: WidgetStateProperty.all(myOrange)),
-                    onPressed: () {},
-                    child: const Icon(Icons.shopping_cart_outlined)),
-              ],
-            ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10.0, left: 10, right: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Center(
+                child: SizedBox(
+                  width: size.width * .8,
+                  child: const SearchBar(
+                    hintText: "Search Products",
+                    padding: WidgetStatePropertyAll<EdgeInsets>(
+                      EdgeInsets.all(10.0),
+                    ),
+                    trailing: [
+                      Icon(Icons.search),
+                      SizedBox(width: 15),
+                    ],
+                  ),
+                ),
+              ),
 
-            //buildSpecialView(context, _mobileList),
-            buildCategoryTabs(),
-            buildGridView(context),
-          ],
+              //buildSpecialView(context, _mobileList),
+              buildCategoryTabs(),
+              buildGridView(context),
+            ],
+          ),
         ),
       ),
     );
@@ -55,27 +60,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   buildCategoryTabs() {
     List<String> categories = ['Mobiles', 'Laptops'];
+
     return Container(
       margin: const EdgeInsets.all(10),
       height: 40,
-      child: ListView.builder(
+      child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
         itemBuilder: (context, index) => FilledButton(
+          style: const ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll<Color>(mainRed),
+          ),
           onPressed: () {
             setState(() {
               current = index;
             });
-            // var api = ApiServices();
-            // switch (current) {
-            //   case 0:
-            //     api.fetchMobiles();
-            //   case 1:
-            //     api.fetchLaptops();
-            // }
           },
           child: Text(categories[index]),
         ),
+        separatorBuilder: (context, index) => const SizedBox(width: 10),
       ),
     );
   }
@@ -92,6 +95,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           return SizedBox(
             height: size.height * .7,
             child: DynamicGrid(
+              aspRatio: {
+                'width': size.width.round(),
+                'height': size.height.round()
+              },
               itemcount: mobileLength,
               itemBuilder: (context, index) {
                 return ElementaryMobileItem(mobile: mobs[index]);
@@ -108,6 +115,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           return SizedBox(
             height: size.height * .7,
             child: DynamicGrid(
+              aspRatio: {
+                'width': size.width.round(),
+                'height': size.height.round()
+              },
               itemcount: laptopLength,
               itemBuilder: (context, index) {
                 return ElementaryLaptopItem(laptop: laptops[index]);

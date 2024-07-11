@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_shop/services/api_services.dart';
 
-import '../models/laptop.dart';
-import '../models/mobile.dart';
+import '../../models/laptop.dart';
+import '../../models/mobile.dart';
 
 final apiservicesProvider = Provider((ref) => ApiServices());
 

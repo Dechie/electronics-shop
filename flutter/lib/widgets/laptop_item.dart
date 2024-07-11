@@ -8,99 +8,94 @@ class ElementaryLaptopItem extends StatelessWidget {
   final Laptop laptop;
 
   const ElementaryLaptopItem({
-    Key? key,
+    super.key,
     required this.laptop,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-      ),
-      width: 180,
-      height: 150,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
+    return GestureDetector(
+      onTap: () {},
+      child: SizedBox(
+        width: double.infinity,
+        height: 200,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: Colors.white,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Image.asset(
-                  'assets/images/s8.jpg',
-                  width: 170,
-                  height: 150,
-                  fit: BoxFit.cover,
+              Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Image.asset(
+                      'assets/images/s8.jpg',
+                      width: double.infinity,
+                      height: 200,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: SizedBox(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(22),
+                        ),
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.favorite_border_outlined,
+                            color: mainRed,
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: CustomText(
+                  text: laptop.title,
+                  size: 16,
+                  color: mainRed,
                 ),
               ),
-              Positioned(
-                top: 0,
-                left: 0,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    borderRadius:
-                        BorderRadius.only(topLeft: Radius.circular(5)),
-                    color: myOrange,
-                  ),
-                  alignment: Alignment.center,
-                  width: 85,
-                  height: 20,
-                  child: CustomText(
-                      text: '${laptop.price} ETB', color: Colors.white),
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+                child: Row(
+                  children: [
+                    CustomText(
+                      text: '${laptop.price} ETB',
+                      color: mainRed,
+                    ),
+                    const Spacer(),
+                    FilledButton.icon(
+                      style: const ButtonStyle(
+                        backgroundColor: WidgetStatePropertyAll<Color>(mainRed),
+                        foregroundColor:
+                            WidgetStatePropertyAll<Color>(Colors.white),
+                      ),
+                      onPressed: () {},
+                      label: const Text('Cart'),
+                      icon: const Icon(
+                        Icons.shopping_cart_checkout_outlined,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-          CustomText(
-            text: laptop.title,
-            size: 16,
-            color: mainRed,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: const WidgetStatePropertyAll<Color>(mainRed),
-                  shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                  ),
-                  padding: const WidgetStatePropertyAll<EdgeInsetsGeometry>(
-                    EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                  ),
-                ),
-                onPressed: () {},
-                child: const Row(
-                  children: [Icon(Icons.info), Text('Info')],
-                ),
-              ),
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: const WidgetStatePropertyAll<Color>(mainRed),
-                  shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                  ),
-                  padding: const WidgetStatePropertyAll<EdgeInsetsGeometry>(
-                    EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                  ),
-                ),
-                onPressed: () {},
-                child: const Row(
-                  children: [Icon(Icons.shopping_cart), Text('Cart')],
-                ),
-              )
-            ],
-          ),
-          const Spacer(),
-        ],
+        ),
       ),
     );
   }

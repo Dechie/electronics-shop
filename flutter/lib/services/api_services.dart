@@ -16,7 +16,7 @@ class ApiServices {
 
     try {
       final response = await http.get(url);
-      print('fetchls status code: ${response.statusCode}');
+      //print('fetchls status code: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         List<dynamic> responseData = json.decode(response.body);
@@ -52,5 +52,3 @@ class ApiServices {
     return fetchedList;
   }
 }
-
-class LaptopServices {}
