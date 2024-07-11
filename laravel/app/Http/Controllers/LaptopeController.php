@@ -3,31 +3,32 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Laptope;
 
-class LaptopController extends Controller
+class LaptopeController extends Controller
 {
     //
      public function index(){
-        return response()->json(Mobile::all());
+        return response()->json(Laptope::all());
     }
 
     public function show($id){
-        return response()->json(['mobile' => Mobile::find($id)]);
+        return response()->json(['mobile' => Laptope::find($id)]);
     }
 
     public function store(Request $request){
-        return Mobile::create($request->all());
+        return Laptope::create($request->all());
     }
 
     public function update(Request $request, $id){
-        $mobile = Mobile::findOrFail($id);
+        $mobile = Laptope::findOrFail($id);
         $mobile->update($request->all());
 
         return $mobile;
     }
 
     public function delete(Request $request, $id){
-        $mobile = Mobile::findOrFail($id);
+        $mobile = Laptope::findOrFail($id);
         $mobile->delete();
 
         return 204;

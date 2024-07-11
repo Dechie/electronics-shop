@@ -17,6 +17,7 @@ class MainPageState extends State<MainPage> {
   final _childScreens = <Widget>[
     const HomeScreen(),
     CartScreen(),
+    CartScreen(),
   ];
 
   @override
@@ -43,10 +44,10 @@ class MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.person,
+              Icons.favorite_border_outlined,
               color: mainRed,
             ),
-            label: 'Me',
+            label: 'Favorites',
           ),
         ],
       ),

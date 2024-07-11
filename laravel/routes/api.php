@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Mobile;
 use App\Http\Controllers\MobileController;
+use App\Http\Controllers\LaptopeController;
 
 /*
 |--------------------------------------------------------------------------
