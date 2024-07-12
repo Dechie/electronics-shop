@@ -6,8 +6,10 @@ class Mobile {
   final int cameraBack;
   final int battery;
   final double price;
+  final String image;
   const Mobile({
     required this.title,
+    required this.image,
     required this.ram,
     required this.storage,
     required this.cameraFront,
@@ -19,6 +21,7 @@ class Mobile {
   factory Mobile.fromJson(Map<String, dynamic> json) {
     return Mobile(
       title: json['title'],
+      image: json['image'],
       price: json['price'].toDouble(),
       battery: json['battery'],
       storage: json['storage'],

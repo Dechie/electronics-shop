@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_shop/constants.dart';
+import 'package:mobile_shop/utils/constants.dart';
 import 'package:mobile_shop/widgets/custom_text.dart';
 
 import '../models/laptop.dart';
@@ -14,6 +14,8 @@ class ElementaryLaptopItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var priceStr = laptop.price.round().toString();
+    priceStr = '${priceStr.substring(0, 2)},${priceStr.substring(2)}';
     return GestureDetector(
       onTap: () {},
       child: SizedBox(
@@ -33,7 +35,7 @@ class ElementaryLaptopItem extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: Image.asset(
-                      'assets/images/s8.jpg',
+                      'assets/images/${laptop.image}',
                       width: double.infinity,
                       height: 200,
                       fit: BoxFit.cover,
@@ -73,23 +75,24 @@ class ElementaryLaptopItem extends StatelessWidget {
                 child: Row(
                   children: [
                     CustomText(
-                      text: '${laptop.price} ETB',
+                      //text: '${laptop.price} ETB',
+                      text: '$priceStr ETB',
                       color: mainRed,
                     ),
                     const Spacer(),
-                    FilledButton.icon(
-                      style: const ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll<Color>(mainRed),
-                        foregroundColor:
-                            WidgetStatePropertyAll<Color>(Colors.white),
-                      ),
-                      onPressed: () {},
-                      label: const Text('Cart'),
-                      icon: const Icon(
-                        Icons.shopping_cart_checkout_outlined,
-                        color: Colors.white,
-                      ),
-                    ),
+                    // FilledButton.icon(
+                    //   style: const ButtonStyle(
+                    //     backgroundColor: WidgetStatePropertyAll<Color>(mainRed),
+                    //     foregroundColor:
+                    //         WidgetStatePropertyAll<Color>(Colors.white),
+                    //   ),
+                    //   onPressed: () {},
+                    //   label: const Text('Cart'),
+                    //   icon: const Icon(
+                    //     Icons.shopping_cart_checkout_outlined,
+                    //     color: Colors.white,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

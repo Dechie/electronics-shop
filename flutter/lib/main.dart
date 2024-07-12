@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile_shop/constants.dart';
-
-import 'screens/main_page.dart';
+import 'package:mobile_shop/screens/home_screen.dart';
+import 'package:mobile_shop/utils/constants.dart';
 
 void main() {
   runApp(
@@ -22,7 +21,8 @@ class MyApp extends StatelessWidget {
         primaryColor: mainRed,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber),
       ),
-      home: const MainPage(),
+      //home: const MainPage(),
+      home: const HomeScreen(),
     );
   }
 }

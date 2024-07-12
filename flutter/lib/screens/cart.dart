@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'bottom_nav_bar.dart';
+
 class CartScreen extends StatefulWidget {
-  CartScreen({Key? key}) : super(key: key);
+  const CartScreen({Key? key}) : super(key: key);
 
   @override
   _CartScreenState createState() => _CartScreenState();
@@ -10,9 +12,12 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const Center(
-        child: Text('cart screen'),
+    return Scaffold(
+      bottomNavigationBar: BottomNavBar(parentContext: context),
+      body: const SizedBox(
+        child: Center(
+          child: Text('cart screen'),
+        ),
       ),
     );
   }

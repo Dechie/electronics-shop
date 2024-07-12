@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_shop/constants.dart';
+import 'package:mobile_shop/utils/constants.dart';
 import 'package:mobile_shop/models/mobile.dart';
 import 'package:mobile_shop/widgets/custom_text.dart';
 

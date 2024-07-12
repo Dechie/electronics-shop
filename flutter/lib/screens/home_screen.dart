@@ -4,11 +4,12 @@ import 'package:mobile_shop/widgets/dyamic_grid.dart';
 import 'package:mobile_shop/widgets/elementary_item.dart';
 import 'package:mobile_shop/widgets/laptop_item.dart';
 
-import '../constants.dart';
 import '../models/laptop.dart';
 import '../models/mobile.dart';
 import '../services/providers/product_providers.dart';
+import '../utils/constants.dart';
 import '../widgets/special_item.dart';
+import 'bottom_nav_bar.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -23,35 +24,38 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: SizedBox(
-        height: size.height * .98,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10.0, left: 10, right: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Center(
-                child: SizedBox(
-                  width: size.width * .8,
-                  child: const SearchBar(
-                    hintText: "Search Products",
-                    padding: WidgetStatePropertyAll<EdgeInsets>(
-                      EdgeInsets.all(10.0),
+    return Scaffold(
+      bottomNavigationBar: BottomNavBar(parentContext: context),
+      body: SafeArea(
+        child: SizedBox(
+          height: size.height * .98,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10.0, left: 10, right: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Center(
+                  child: SizedBox(
+                    width: size.width * .8,
+                    child: const SearchBar(
+                      hintText: "Search Products",
+                      padding: WidgetStatePropertyAll<EdgeInsets>(
+                        EdgeInsets.all(10.0),
+                      ),
+                      trailing: [
+                        Icon(Icons.search),
+                        SizedBox(width: 15),
+                      ],
                     ),
-                    trailing: [
-                      Icon(Icons.search),
-                      SizedBox(width: 15),
-                    ],
                   ),
                 ),
-              ),
 
-              //buildSpecialView(context, _mobileList),
-              buildCategoryTabs(),
-              buildGridView(context),
-            ],
+                //buildSpecialView(context, _mobileList),
+                buildCategoryTabs(),
+                buildGridView(context),
+              ],
+            ),
           ),
         ),
       ),
@@ -182,17 +186,5 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    //_fetchMobiles();
   }
-
-  // void _fetchMobiles() async {
-  //   List<Mobile> mobList = [];
-  //   final api = ApiServices();
-
-  //   mobList = await api.fetchMobiles();
-
-  //   setState(() {
-  //     _mobileList = mobList;
-  //   });
-  // }
 }

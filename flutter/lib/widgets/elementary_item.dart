@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_shop/constants.dart';
+import 'package:mobile_shop/utils/constants.dart';
 import 'package:mobile_shop/widgets/custom_text.dart';
 
 import '../models/mobile.dart';
@@ -91,26 +91,26 @@ class ElementaryMobileItem extends StatelessWidget {
                       color: mainRed,
                     ),
                     const Spacer(),
-                    FilledButton.icon(
-                      style: const ButtonStyle(
-                        backgroundColor: WidgetStatePropertyAll<Color>(mainRed),
-                        foregroundColor:
-                            WidgetStatePropertyAll<Color>(Colors.white),
-                      ),
-                      onPressed: () {
-                        showAboutDialog(
-                          context: context,
-                          children: [
-                            const Text('cart button touched'),
-                          ],
-                        );
-                      },
-                      label: const Text('Cart'),
-                      icon: const Icon(
-                        Icons.shopping_cart_checkout_outlined,
-                        color: Colors.white,
-                      ),
-                    ),
+                    // FilledButton.icon(
+                    //   style: const ButtonStyle(
+                    //     backgroundColor: WidgetStatePropertyAll<Color>(mainRed),
+                    //     foregroundColor:
+                    //         WidgetStatePropertyAll<Color>(Colors.white),
+                    //   ),
+                    //   onPressed: () {
+                    //     showAboutDialog(
+                    //       context: context,
+                    //       children: [
+                    //         const Text('cart button touched'),
+                    //       ],
+                    //     );
+                    //   },
+                    //   label: const Text('Cart'),
+                    //   icon: const Icon(
+                    //     Icons.shopping_cart_checkout_outlined,
+                    //     color: Colors.white,
+                    //   ),
+                    // ),
                   ],
                 ),
               )

@@ -25,7 +25,7 @@ class _DynamicGridState extends State<DynamicGrid> {
         crossAxisCount: 2,
         // childAspectRatio: 1 / 4,
         childAspectRatio: widget.aspRatio['width']! /
-            (widget.aspRatio['height']! / 1.75).round(),
+            (widget.aspRatio['height']! / 1.65).round(),
         mainAxisSpacing: 30,
         crossAxisSpacing: 10,
       ),
