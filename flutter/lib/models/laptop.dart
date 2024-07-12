@@ -1,19 +1,24 @@
+import 'package:uuid/uuid.dart';
+
+const uuid = Uuid();
+
 class Laptop {
   final String title;
+  final String id;
   final String image;
   final String storage;
   final int ram;
   final String core;
   final double price;
 
-  const Laptop({
+  Laptop({
     required this.title,
     required this.image,
     required this.ram,
     required this.storage,
     required this.core,
     required this.price,
-  });
+  }) : id = uuid.v4();
 
   factory Laptop.fromJson(Map<String, dynamic> json) {
     Laptop? laptop;

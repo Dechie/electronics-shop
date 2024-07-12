@@ -34,7 +34,7 @@ class ApiServices {
 
   Future<List<Mobile>> fetchMobiles() async {
     print('fetch mobiles called');
-    await Future.delayed(const Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 2));
     final url = Uri.parse('$baseUrl/mobiles');
     List<Mobile> fetchedList = [];
 

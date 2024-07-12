@@ -1,4 +1,9 @@
+import 'package:uuid/uuid.dart';
+
+const uuid = Uuid();
+
 class Mobile {
+  final String id;
   final String title;
   final int storage;
   final int ram;
@@ -7,7 +12,7 @@ class Mobile {
   final int battery;
   final double price;
   final String image;
-  const Mobile({
+  Mobile({
     required this.title,
     required this.image,
     required this.ram,
@@ -16,7 +21,7 @@ class Mobile {
     required this.cameraBack,
     required this.battery,
     required this.price,
-  });
+  }) : id = uuid.v4();
 
   factory Mobile.fromJson(Map<String, dynamic> json) {
     return Mobile(

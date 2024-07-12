@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_shop/services/providers/mobile_favorites.dart';
 import 'package:mobile_shop/utils/constants.dart';
 import 'package:mobile_shop/widgets/custom_text.dart';
 
 import '../models/mobile.dart';
 
-class ElementaryMobileItem extends StatelessWidget {
+class ElementaryMobileItem extends ConsumerStatefulWidget {
   final Mobile mobile;
 
+  final bool isFavorite;
+
+  final void Function() changeIconData;
   const ElementaryMobileItem({
     super.key,
     required this.mobile,
+    required this.changeIconData,
+    required this.isFavorite,
   });
 
+  @override
+  ConsumerState<ElementaryMobileItem> createState() =>
+      _ElementaryMobileItemState();
+}
+
+class _ElementaryMobileItemState extends ConsumerState<ElementaryMobileItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -56,16 +69,23 @@ class ElementaryMobileItem extends StatelessWidget {
                           borderRadius: BorderRadius.circular(22),
                         ),
                         child: IconButton(
-                          icon: const Icon(
-                            Icons.favorite_border_outlined,
+                          icon: Icon(
+                            widget.isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border,
                             color: mainRed,
                           ),
                           onPressed: () {
-                            showAboutDialog(
-                              context: context,
-                              children: [
-                                const Text('favorite button touched'),
-                              ],
+                            final wasAdded = ref
+                                .read(mobileFavProvider.notifier)
+                                .toggleMobileFavorite(widget.mobile);
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  wasAdded ? 'Added' : 'Removed',
+                                ),
+                              ),
                             );
                           },
                         ),
@@ -77,7 +97,7 @@ class ElementaryMobileItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: CustomText(
-                  text: mobile.title,
+                  text: widget.mobile.title,
                   size: 16,
                   color: mainRed,
                 ),
@@ -87,15 +107,15 @@ class ElementaryMobileItem extends StatelessWidget {
                 child: Row(
                   children: [
                     CustomText(
-                      text: '${mobile.price} ETB',
+                      text: '${widget.mobile.price} ETB',
                       color: mainRed,
                     ),
                     const Spacer(),
                     // FilledButton.icon(
                     //   style: const ButtonStyle(
-                    //     backgroundColor: WidgetStatePropertyAll<Color>(mainRed),
+                    //     backgroundColor: WidgetConsumerStatePropertyAll<Color>(mainRed),
                     //     foregroundColor:
-                    //         WidgetStatePropertyAll<Color>(Colors.white),
+                    //         WidgetConsumerStatePropertyAll<Color>(Colors.white),
                     //   ),
                     //   onPressed: () {
                     //     showAboutDialog(

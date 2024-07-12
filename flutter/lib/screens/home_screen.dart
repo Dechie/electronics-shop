@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_shop/services/providers/laptop_favorites.dart';
+import 'package:mobile_shop/services/providers/mobile_favorites.dart';
 import 'package:mobile_shop/widgets/dyamic_grid.dart';
-import 'package:mobile_shop/widgets/elementary_item.dart';
 import 'package:mobile_shop/widgets/laptop_item.dart';
+import 'package:mobile_shop/widgets/mobile_item.dart';
 
 import '../models/laptop.dart';
 import '../models/mobile.dart';
@@ -88,14 +90,31 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Widget buildGrids(
-      AsyncValue<List<Mobile>> mobs, AsyncValue<List<Laptop>> laptops) {
-    var mobileLength = mobs.asData?.value.length ?? 0;
+      AsyncValue<List<Mobile>> mobiles, AsyncValue<List<Laptop>> laptops) {
+    var mobileLength = mobiles.asData?.value.length ?? 0;
     var laptopLength = laptops.asData?.value.length ?? 0;
     Widget? finalWidget;
 
+    final laptopFavTurnedOns = ref.watch(laptopFavProvider);
+    final mobileFavTurnedOns = ref.watch(mobileFavProvider);
+
+    var laptopVals = laptops.value ?? [];
+    List<bool> laptopFavs = laptopVals
+        .map(
+          (laptop) => laptopFavTurnedOns.contains(laptop),
+        )
+        .toList();
+
+    var mobileVals = mobiles.value ?? [];
+    List<bool> mobileFavs = mobileVals
+        .map(
+          (mobile) => mobileFavTurnedOns.contains(mobile),
+        )
+        .toList();
+
     if (current == 0) {
-      finalWidget = mobs.when(
-        data: (mobs) {
+      finalWidget = mobiles.when(
+        data: (mobiles) {
           return SizedBox(
             height: size.height * .7,
             child: DynamicGrid(
@@ -105,7 +124,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               },
               itemcount: mobileLength,
               itemBuilder: (context, index) {
-                return ElementaryMobileItem(mobile: mobs[index]);
+                return ElementaryMobileItem(
+                  changeIconData: () {
+                    setState(() {
+                      mobileFavs[index] = !mobileFavs[index];
+                    });
+                  },
+                  mobile: mobiles[index],
+                  isFavorite: mobileFavs[index],
+                );
               },
             ),
           );
@@ -125,7 +152,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               },
               itemcount: laptopLength,
               itemBuilder: (context, index) {
-                return ElementaryLaptopItem(laptop: laptops[index]);
+                return ElementaryLaptopItem(
+                  changeIconData: () {
+                    setState(() {
+                      laptopFavs[index] = !laptopFavs[index];
+                    });
+                  },
+                  laptop: laptops[index],
+                  isFavorite: laptopFavs[index],
+                );
               },
             ),
           );
@@ -140,7 +175,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   buildGridView(BuildContext context) {
-    final mobs = ref.watch(mobilesProvider);
+    final mobiles = ref.watch(mobilesProvider);
     final laptops = ref.watch(laptopsProvider);
 
     return SizedBox(
@@ -148,7 +183,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       width: double.infinity,
       child: Padding(
         padding: const EdgeInsets.all(8),
-        child: buildGrids(mobs, laptops),
+        child: buildGrids(mobiles, laptops),
       ),
     );
   }

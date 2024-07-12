@@ -1,23 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_shop/utils/constants.dart';
 import 'package:mobile_shop/widgets/custom_text.dart';
 
 import '../models/laptop.dart';
+import '../services/providers/laptop_favorites.dart';
 
-class ElementaryLaptopItem extends StatelessWidget {
+class ElementaryLaptopItem extends ConsumerStatefulWidget {
   final Laptop laptop;
 
+  final void Function() changeIconData;
+
+  final bool isFavorite;
   const ElementaryLaptopItem({
     super.key,
     required this.laptop,
+    required this.changeIconData,
+    required this.isFavorite,
   });
 
   @override
+  ConsumerState<ElementaryLaptopItem> createState() =>
+      _ElementaryLaptopItemState();
+}
+
+class _ElementaryLaptopItemState extends ConsumerState<ElementaryLaptopItem> {
+  bool wasItAdded = false;
+
+  @override
   Widget build(BuildContext context) {
-    var priceStr = laptop.price.round().toString();
+    var priceStr = widget.laptop.price.round().toString();
     priceStr = '${priceStr.substring(0, 2)},${priceStr.substring(2)}';
+
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        scaff();
+      },
       child: SizedBox(
         width: double.infinity,
         height: 200,
@@ -35,7 +53,7 @@ class ElementaryLaptopItem extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: Image.asset(
-                      'assets/images/${laptop.image}',
+                      'assets/images/${widget.laptop.image}',
                       width: double.infinity,
                       height: 200,
                       fit: BoxFit.cover,
@@ -51,11 +69,28 @@ class ElementaryLaptopItem extends StatelessWidget {
                           borderRadius: BorderRadius.circular(22),
                         ),
                         child: IconButton(
-                          icon: const Icon(
-                            Icons.favorite_border_outlined,
+                          icon: Icon(
+                            widget.isFavorite
+                                ? Icons.favorite
+                                : Icons.favorite_border,
                             color: mainRed,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            final wasAdded = ref
+                                .read(laptopFavProvider.notifier)
+                                .toggleLaptopFavorite(widget.laptop);
+
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  wasAdded
+                                      ? 'Successully added to favorites'
+                                      : 'Removed From favorites',
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -65,7 +100,7 @@ class ElementaryLaptopItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: CustomText(
-                  text: laptop.title,
+                  text: widget.laptop.title,
                   size: 16,
                   color: mainRed,
                 ),
@@ -98,6 +133,22 @@ class ElementaryLaptopItem extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void scaff() {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          widget.laptop.title,
         ),
       ),
     );
