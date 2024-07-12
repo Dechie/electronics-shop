@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../utils/constants.dart';
 import '../utils/method_utils.dart';
-import 'cart.dart';
+import 'cart_screen.dart';
 import 'favorites_screen.dart';
 import 'home_screen.dart';
 

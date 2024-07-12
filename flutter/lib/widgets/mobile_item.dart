@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile_shop/services/providers/mobile_favorites.dart';
+import 'package:mobile_shop/services/providers/all_favorites.dart';
+import 'package:mobile_shop/services/providers/cart_items.dart';
 import 'package:mobile_shop/utils/constants.dart';
 import 'package:mobile_shop/widgets/custom_text.dart';
 
@@ -27,13 +28,19 @@ class ElementaryMobileItem extends ConsumerStatefulWidget {
 class _ElementaryMobileItemState extends ConsumerState<ElementaryMobileItem> {
   @override
   Widget build(BuildContext context) {
+    var priceStr = widget.mobile.price.round().toString();
+    priceStr = '${priceStr.substring(0, 2)},${priceStr.substring(2)}';
     return GestureDetector(
       onTap: () {
-        showAboutDialog(
-          context: context,
-          children: [
-            const Text('overall widget selected'),
-          ],
+        final wasAdded =
+            ref.read(cartItemsProvider.notifier).addItemToCart(widget.mobile);
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              wasAdded ? 'Successully added to cart' : 'Removed From cart',
+            ),
+          ),
         );
       },
       child: SizedBox(
@@ -77,13 +84,15 @@ class _ElementaryMobileItemState extends ConsumerState<ElementaryMobileItem> {
                           ),
                           onPressed: () {
                             final wasAdded = ref
-                                .read(mobileFavProvider.notifier)
-                                .toggleMobileFavorite(widget.mobile);
+                                .read(allFavProvider.notifier)
+                                .toggleItemFavorite(widget.mobile);
                             ScaffoldMessenger.of(context).clearSnackBars();
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
-                                  wasAdded ? 'Added' : 'Removed',
+                                  wasAdded
+                                      ? 'Successully added to favorites'
+                                      : 'Removed From favorites',
                                 ),
                               ),
                             );
@@ -107,7 +116,7 @@ class _ElementaryMobileItemState extends ConsumerState<ElementaryMobileItem> {
                 child: Row(
                   children: [
                     CustomText(
-                      text: '${widget.mobile.price} ETB',
+                      text: '$priceStr ETB',
                       color: mainRed,
                     ),
                     const Spacer(),

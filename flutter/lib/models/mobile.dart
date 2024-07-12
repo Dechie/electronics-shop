@@ -35,4 +35,7 @@ class Mobile {
       cameraBack: json['back_camera'],
     );
   }
+
+  @override
+  String toString() => ">mobile id: $id, title: $title, price: $price";
 }

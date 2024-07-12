@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile_shop/screens/bottom_nav_bar.dart';
-import 'package:mobile_shop/services/providers/all_favorites.dart';
+import 'package:mobile_shop/services/providers/cart_items.dart';
 
 import '../utils/method_utils.dart';
+import 'bottom_nav_bar.dart';
 
-class FavoritesScreen extends ConsumerStatefulWidget {
-  const FavoritesScreen({super.key});
+class CartScreen extends ConsumerStatefulWidget {
+  const CartScreen({super.key});
 
   @override
-  ConsumerState<FavoritesScreen> createState() => _FavoritesScreenState();
+  ConsumerState<CartScreen> createState() => _CartScreenState();
 }
 
-class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
+class _CartScreenState extends ConsumerState<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,6 +63,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
       SizedBox(
         width: double.infinity,
         child: Text(
+
           "ETB ${item.price}",
         ),
       ),
@@ -91,7 +92,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
   }
 
   _buildPropertyList() {
-    final favList = ref.watch(allFavProvider);
+    final favList = ref.watch(cartItemsProvider);
     if (favList.isEmpty) {
       return const Center(
         child: Text(

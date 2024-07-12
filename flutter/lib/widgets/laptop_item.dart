@@ -4,7 +4,8 @@ import 'package:mobile_shop/utils/constants.dart';
 import 'package:mobile_shop/widgets/custom_text.dart';
 
 import '../models/laptop.dart';
-import '../services/providers/laptop_favorites.dart';
+import '../services/providers/all_favorites.dart';
+import '../services/providers/cart_items.dart';
 
 class ElementaryLaptopItem extends ConsumerStatefulWidget {
   final Laptop laptop;
@@ -34,7 +35,16 @@ class _ElementaryLaptopItemState extends ConsumerState<ElementaryLaptopItem> {
 
     return GestureDetector(
       onTap: () {
-        scaff();
+        final wasAdded =
+            ref.read(cartItemsProvider.notifier).addItemToCart(widget.laptop);
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              wasAdded ? 'Successully added to cart' : 'Removed From cart',
+            ),
+          ),
+        );
       },
       child: SizedBox(
         width: double.infinity,
@@ -77,8 +87,8 @@ class _ElementaryLaptopItemState extends ConsumerState<ElementaryLaptopItem> {
                           ),
                           onPressed: () {
                             final wasAdded = ref
-                                .read(laptopFavProvider.notifier)
-                                .toggleLaptopFavorite(widget.laptop);
+                                .read(allFavProvider.notifier)
+                                .toggleItemFavorite(widget.laptop);
 
                             ScaffoldMessenger.of(context).clearSnackBars();
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -141,16 +151,5 @@ class _ElementaryLaptopItemState extends ConsumerState<ElementaryLaptopItem> {
   @override
   void initState() {
     super.initState();
-  }
-
-  void scaff() {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          widget.laptop.title,
-        ),
-      ),
-    );
   }
 }

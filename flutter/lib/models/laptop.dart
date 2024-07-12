@@ -39,4 +39,7 @@ class Laptop {
 
     return laptop!;
   }
+
+  @override
+  String toString() => ">laptop id: $id, title: $title, price: $price";
 }

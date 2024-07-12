@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile_shop/services/providers/laptop_favorites.dart';
-import 'package:mobile_shop/services/providers/mobile_favorites.dart';
 import 'package:mobile_shop/widgets/dyamic_grid.dart';
 import 'package:mobile_shop/widgets/laptop_item.dart';
 import 'package:mobile_shop/widgets/mobile_item.dart';
 
 import '../models/laptop.dart';
 import '../models/mobile.dart';
+import '../services/providers/all_favorites.dart';
 import '../services/providers/product_providers.dart';
 import '../utils/constants.dart';
 import '../widgets/special_item.dart';
@@ -95,22 +94,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     var laptopLength = laptops.asData?.value.length ?? 0;
     Widget? finalWidget;
 
-    final laptopFavTurnedOns = ref.watch(laptopFavProvider);
-    final mobileFavTurnedOns = ref.watch(mobileFavProvider);
+    final allFavTurnedOns = ref.watch(allFavProvider);
 
     var laptopVals = laptops.value ?? [];
     List<bool> laptopFavs = laptopVals
         .map(
-          (laptop) => laptopFavTurnedOns.contains(laptop),
+          (laptop) => allFavTurnedOns.contains(laptop),
         )
         .toList();
 
     var mobileVals = mobiles.value ?? [];
     List<bool> mobileFavs = mobileVals
         .map(
-          (mobile) => mobileFavTurnedOns.contains(mobile),
+          (mobile) => allFavTurnedOns.contains(mobile),
         )
         .toList();
+    print(mobileFavs);
 
     if (current == 0) {
       finalWidget = mobiles.when(
