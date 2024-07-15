@@ -78,6 +78,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     return Container(
       margin: const EdgeInsets.all(10),
+      alignment: Alignment.center,
       height: 40,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,

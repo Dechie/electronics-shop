@@ -9,7 +9,8 @@ import '../utils/method_utils.dart';
 class BottomNavBar extends StatelessWidget {
   final BuildContext parentContext;
 
-  const BottomNavBar({
+  int _currentIndex = 0;
+  BottomNavBar({
     super.key,
     required this.parentContext,
   });
@@ -18,17 +19,18 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       onTap: onTabTap,
+      currentIndex: _currentIndex,
       items: const [
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.home,
+            Icons.home_outlined,
             color: mainredMoreBlacked,
           ),
           label: 'Home',
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.shopping_cart,
+            Icons.shopping_cart_outlined,
             color: mainredMoreBlacked,
           ),
           label: 'Cart',
@@ -46,6 +48,7 @@ class BottomNavBar extends StatelessWidget {
 
   void onTabTap(int index) {
     var enumValue = Pages.values[index];
+    _currentIndex = index;
     Widget navTo = targetScreen(enumValue);
     navigate(parentContext, navTo);
   }
