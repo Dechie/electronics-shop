@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_shop/screens/detail%20screen/detail_screen.dart';
 import 'package:mobile_shop/services/providers/all_favorites.dart';
-import 'package:mobile_shop/services/providers/cart_items.dart';
 import 'package:mobile_shop/utils/constants.dart';
+import 'package:mobile_shop/utils/method_utils.dart';
 import 'package:mobile_shop/widgets/custom_text.dart';
 
 import '../models/mobile.dart';
@@ -32,23 +33,27 @@ class _ElementaryMobileItemState extends ConsumerState<ElementaryMobileItem> {
     priceStr = '${priceStr.substring(0, 2)},${priceStr.substring(2)}';
     return GestureDetector(
       onTap: () {
-        final wasAdded =
-            ref.read(cartItemsProvider.notifier).addItemToCart(widget.mobile);
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              wasAdded ? 'Successully added to cart' : 'Removed From cart',
-            ),
-          ),
+        // final wasAdded =
+        //     ref.read(cartItemsProvider.notifier).addItemToCart(widget.mobile);
+        // ScaffoldMessenger.of(context).clearSnackBars();
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     content: Text(
+        //       wasAdded ? 'Successully added to cart' : 'Removed From cart',
+        //     ),
+        //   ),
+        // );
+        navigate(
+          context,
+          DetailScreen(product: widget.mobile),
         );
       },
       child: SizedBox(
         width: double.infinity,
-        height: 200,
+        height: 148,
         child: DecoratedBox(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(10),
             color: Colors.white,
           ),
           child: Column(
@@ -62,7 +67,7 @@ class _ElementaryMobileItemState extends ConsumerState<ElementaryMobileItem> {
                     child: Image.asset(
                       'assets/images/s8.jpg',
                       width: double.infinity,
-                      height: 200,
+                      height: 148,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -107,8 +112,8 @@ class _ElementaryMobileItemState extends ConsumerState<ElementaryMobileItem> {
                 padding: const EdgeInsets.only(left: 8.0),
                 child: CustomText(
                   text: widget.mobile.title,
-                  size: 16,
-                  color: mainRed,
+                  size: Theme.of(context).textTheme.titleSmall!.fontSize,
+                  color: mainredBlacked,
                 ),
               ),
               Padding(
@@ -117,9 +122,8 @@ class _ElementaryMobileItemState extends ConsumerState<ElementaryMobileItem> {
                   children: [
                     CustomText(
                       text: '$priceStr ETB',
-                      color: mainRed,
+                      color: mainredBlacked,
                     ),
-                    const Spacer(),
                     // FilledButton.icon(
                     //   style: const ButtonStyle(
                     //     backgroundColor: WidgetConsumerStatePropertyAll<Color>(mainRed),

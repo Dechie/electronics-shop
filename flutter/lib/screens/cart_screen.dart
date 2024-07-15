@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_shop/services/providers/cart_items.dart';
 
 import '../utils/method_utils.dart';
-import 'bottom_nav_bar.dart';
+import '../widgets/bottom_nav_bar.dart';
 
 class CartScreen extends ConsumerStatefulWidget {
   const CartScreen({super.key});
@@ -63,7 +63,6 @@ class _CartScreenState extends ConsumerState<CartScreen> {
       SizedBox(
         width: double.infinity,
         child: Text(
-
           "ETB ${item.price}",
         ),
       ),

@@ -9,8 +9,8 @@ import '../models/mobile.dart';
 import '../services/providers/all_favorites.dart';
 import '../services/providers/product_providers.dart';
 import '../utils/constants.dart';
+import '../widgets/bottom_nav_bar.dart';
 import '../widgets/special_item.dart';
-import 'bottom_nav_bar.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -24,38 +24,48 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   int current = 0;
   @override
   Widget build(BuildContext context) {
+    var h = MediaQuery.of(context).size.height;
+    print('main container size: ${h * .98}');
+    print('build grids container size: ${h * .78}');
+    print('build gridview container size: ${h * .78}');
     size = MediaQuery.of(context).size;
     return Scaffold(
       bottomNavigationBar: BottomNavBar(parentContext: context),
       body: SafeArea(
         child: SizedBox(
           height: size.height * .98,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 10.0, left: 10, right: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Center(
-                  child: SizedBox(
-                    width: size.width * .8,
-                    child: const SearchBar(
-                      hintText: "Search Products",
-                      padding: WidgetStatePropertyAll<EdgeInsets>(
-                        EdgeInsets.all(10.0),
-                      ),
-                      trailing: [
-                        Icon(Icons.search),
-                        SizedBox(width: 15),
-                      ],
-                    ),
-                  ),
+          child: DecoratedBox(
+            decoration: const BoxDecoration(
+                // color: Colors.green,
+                // for debug purposes
                 ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10.0, left: 10, right: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  // Center(
+                  //   child: SizedBox(
+                  //     width: size.width * .8,
+                  //     child: const SearchBar(
+                  //       hintText: "Search Products",
+                  //       padding: WidgetStatePropertyAll<EdgeInsets>(
+                  //         EdgeInsets.all(10.0),
+                  //       ),
+                  //       trailing: [
+                  //         Icon(Icons.search),
+                  //         SizedBox(width: 15),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
 
-                //buildSpecialView(context, _mobileList),
-                buildCategoryTabs(),
-                buildGridView(context),
-              ],
+                  //buildSpecialView(context, _mobileList),
+                  buildCategoryTabs(),
+                  buildGridView(context),
+                ],
+              ),
             ),
           ),
         ),
@@ -74,7 +84,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         itemCount: categories.length,
         itemBuilder: (context, index) => FilledButton(
           style: const ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll<Color>(mainRed),
+            backgroundColor: WidgetStatePropertyAll<Color>(mainredMoreBlacked),
           ),
           onPressed: () {
             setState(() {
@@ -115,24 +125,29 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       finalWidget = mobiles.when(
         data: (mobiles) {
           return SizedBox(
-            height: size.height * .7,
-            child: DynamicGrid(
-              aspRatio: {
-                'width': size.width.round(),
-                'height': size.height.round()
-              },
-              itemcount: mobileLength,
-              itemBuilder: (context, index) {
-                return ElementaryMobileItem(
-                  changeIconData: () {
-                    setState(() {
-                      mobileFavs[index] = !mobileFavs[index];
-                    });
-                  },
-                  mobile: mobiles[index],
-                  isFavorite: mobileFavs[index],
-                );
-              },
+            //height: size.height * .8,
+            child: DecoratedBox(
+              decoration: const BoxDecoration(
+                  //color: Colors.indigo,
+                  ),
+              child: DynamicGrid(
+                aspRatio: {
+                  'width': size.width.round(),
+                  'height': size.height.round()
+                },
+                itemcount: mobileLength,
+                itemBuilder: (context, index) {
+                  return ElementaryMobileItem(
+                    changeIconData: () {
+                      setState(() {
+                        mobileFavs[index] = !mobileFavs[index];
+                      });
+                    },
+                    mobile: mobiles[index],
+                    isFavorite: mobileFavs[index],
+                  );
+                },
+              ),
             ),
           );
         },
@@ -143,7 +158,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       finalWidget = laptops.when(
         data: (laptops) {
           return SizedBox(
-            height: size.height * .7,
+            height: size.height * .8,
             child: DynamicGrid(
               aspRatio: {
                 'width': size.width.round(),
@@ -178,10 +193,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final laptops = ref.watch(laptopsProvider);
 
     return SizedBox(
-      height: size.height * .8,
+      height: size.height * .78,
       width: double.infinity,
-      child: Padding(
-        padding: const EdgeInsets.all(8),
+      child: DecoratedBox(
+        decoration: const BoxDecoration(
+            //color: Colors.red,
+            ),
         child: buildGrids(mobiles, laptops),
       ),
     );

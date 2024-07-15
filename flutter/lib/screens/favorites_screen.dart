@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile_shop/screens/bottom_nav_bar.dart';
+import 'package:mobile_shop/widgets/bottom_nav_bar.dart';
 import 'package:mobile_shop/services/providers/all_favorites.dart';
 
 import '../utils/method_utils.dart';

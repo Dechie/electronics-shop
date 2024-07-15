@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../screens/cart_screen.dart';
+import '../screens/favorites_screen.dart';
+import '../screens/home_screen.dart';
 import '../utils/constants.dart';
 import '../utils/method_utils.dart';
-import 'cart_screen.dart';
-import 'favorites_screen.dart';
-import 'home_screen.dart';
 
 class BottomNavBar extends StatelessWidget {
   final BuildContext parentContext;
@@ -22,21 +22,21 @@ class BottomNavBar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(
             Icons.home,
-            color: mainRed,
+            color: mainredMoreBlacked,
           ),
           label: 'Home',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.shopping_cart,
-            color: mainRed,
+            color: mainredMoreBlacked,
           ),
           label: 'Cart',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             Icons.favorite_border_outlined,
-            color: mainRed,
+            color: mainredMoreBlacked,
           ),
           label: 'Favorites',
         ),

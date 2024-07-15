@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_shop/screens/detail%20screen/detail_screen.dart';
 import 'package:mobile_shop/utils/constants.dart';
+import 'package:mobile_shop/utils/method_utils.dart';
 import 'package:mobile_shop/widgets/custom_text.dart';
 
 import '../models/laptop.dart';
 import '../services/providers/all_favorites.dart';
-import '../services/providers/cart_items.dart';
 
 class ElementaryLaptopItem extends ConsumerStatefulWidget {
   final Laptop laptop;
@@ -35,20 +36,24 @@ class _ElementaryLaptopItemState extends ConsumerState<ElementaryLaptopItem> {
 
     return GestureDetector(
       onTap: () {
-        final wasAdded =
-            ref.read(cartItemsProvider.notifier).addItemToCart(widget.laptop);
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              wasAdded ? 'Successully added to cart' : 'Removed From cart',
-            ),
-          ),
+        // final wasAdded =
+        //     ref.read(cartItemsProvider.notifier).addItemToCart(widget.laptop);
+        // ScaffoldMessenger.of(context).clearSnackBars();
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     content: Text(
+        //       wasAdded ? 'Successully added to cart' : 'Removed From cart',
+        //     ),
+        //   ),
+        // );
+        navigate(
+          context,
+          DetailScreen(product: widget.laptop),
         );
       },
       child: SizedBox(
         width: double.infinity,
-        height: 200,
+        height: 148,
         child: DecoratedBox(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
@@ -65,7 +70,7 @@ class _ElementaryLaptopItemState extends ConsumerState<ElementaryLaptopItem> {
                     child: Image.asset(
                       'assets/images/${widget.laptop.image}',
                       width: double.infinity,
-                      height: 200,
+                      height: 148,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -111,8 +116,8 @@ class _ElementaryLaptopItemState extends ConsumerState<ElementaryLaptopItem> {
                 padding: const EdgeInsets.only(left: 8.0),
                 child: CustomText(
                   text: widget.laptop.title,
-                  size: 16,
-                  color: mainRed,
+                  size: Theme.of(context).textTheme.titleSmall!.fontSize,
+                  color: mainredBlacked,
                 ),
               ),
               Padding(
@@ -122,7 +127,7 @@ class _ElementaryLaptopItemState extends ConsumerState<ElementaryLaptopItem> {
                     CustomText(
                       //text: '${laptop.price} ETB',
                       text: '$priceStr ETB',
-                      color: mainRed,
+                      color: mainredBlacked,
                     ),
                     const Spacer(),
                     // FilledButton.icon(
