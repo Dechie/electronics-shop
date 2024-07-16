@@ -21,6 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/register', [UserController::classs, 'register']);
+Route::post('/login', [UserController::classs, 'login']);
+
 Route::get('mobiles', [MobileController::class, 'index']);
 Route::get('mobile/{id}', [MobileController::class, 'show']);
 Route::post('mobiles', [MobileController::class, 'store']);

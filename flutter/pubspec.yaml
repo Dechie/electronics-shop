@@ -38,6 +38,8 @@ dependencies:
   http: ^1.2.1
   flutter_riverpod: ^2.5.1
   uuid: ^4.4.2
+  dio: ^5.5.0+1
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:

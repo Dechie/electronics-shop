@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_shop/models/laptop.dart';
+import 'package:mobile_shop/screens/auth/login.dart';
 import 'package:mobile_shop/screens/cart_screen.dart';
+import 'package:mobile_shop/services/auth/auth_services.dart';
 import 'package:mobile_shop/services/providers/cart_items.dart';
 import 'package:mobile_shop/utils/method_utils.dart';
 import 'package:mobile_shop/widgets/specs_list.dart';
 
+import '../../models/auth_state.dart';
 import '../../models/mobile.dart';
 import '../../utils/constants.dart';
 
@@ -25,12 +28,20 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
   String priceStr = '';
   bool itsAdded = false;
   bool isAddedToCart = false;
+
+  bool isAuthChecking = false;
+
+  late AuthState authState;
   Map<String, dynamic> specs = {};
   var product;
   DraggableScrollableController sheetController =
       DraggableScrollableController();
+
+  //authState =
   @override
   Widget build(BuildContext context) {
+    authState = ref.watch(authStateProvider);
+
     List cartItems = ref.watch(cartItemsProvider);
     isAddedToCart = cartItems.contains(product);
 
@@ -44,13 +55,28 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
           items: [
             BottomNavigationBarItem(
               icon: FilledButton(
-                onPressed: () {
+                onPressed: () async {
+                  await ref.read(authStateProvider.notifier).checkAuthed();
+                  if (authState.user == null) {
+                    ScaffoldMessenger.of(context).clearSnackBars();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Auth State checked, no uer"),
+                      ),
+                    );
+                    if (mounted) {
+                      // ignore: use_build_context_synchronously
+                      navigate(context, const LoginScreen());
+                    }
+                    return;
+                  }
                   final wasAdded = ref
                       .read(cartItemsProvider.notifier)
                       .addItemToCart(product);
                   setState(() {
                     itsAdded = wasAdded;
                   });
+
                   ScaffoldMessenger.of(context).clearSnackBars();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -62,9 +88,11 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                     ),
                   );
                 },
-                child: Text(
-                  isAddedToCart ? 'Remove' : 'Add To Cart',
-                ),
+                child: authState.isLoading
+                    ? const CircularProgressIndicator()
+                    : Text(
+                        isAddedToCart ? 'Remove' : 'Add To Cart',
+                      ),
               ),
               label: '',
             ),

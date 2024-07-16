@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile_shop/screens/home_screen.dart';
 import 'package:mobile_shop/utils/constants.dart';
+
+import 'screens/home_screen.dart';
 
 void main() {
   runApp(
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       ),
       //home: const MainPage(),
       home: const HomeScreen(),
+      //home: const LoginScreen(),
     );
   }
 }
