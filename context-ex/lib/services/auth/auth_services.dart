@@ -18,18 +18,11 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
 
   Future<void> checkAuthed() async {
     final shPref = await SharedPreferences.getInstance();
-    //shPref.remove("authState");
-    // reset this to check
     final jsonValue = json.decode(shPref.getString('authState') ?? "{}");
 
     if (jsonValue != null) {
       state = AuthState.fromJson(jsonValue);
     }
-  }
-
-  Future<void> clearRedirectRoute() async {
-    state = state.copywith(redirectRoute: null);
-    await saveAuthState();
   }
 
   Future<void> login(String name, String phone, String password) async {
@@ -63,10 +56,8 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     }
   }
 
-  void logout() async {
+  void logout() {
     state = AuthState();
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove("authState");
   }
 
   Future<void> register(Map<String, dynamic> regValues) async {
@@ -100,9 +91,5 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     final prefs = await SharedPreferences.getInstance();
     final authStateJson = jsonEncode(state.toJson());
     await prefs.setString('authState', authStateJson);
-  }
-
-  void setRedirectRoute(String route) {
-    state = state.copywith(redirectRoute: route);
   }
 }

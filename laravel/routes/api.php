@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Mobile;
 use App\Http\Controllers\MobileController;
 use App\Http\Controllers\LaptopeController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/register', [UserController::classs, 'register']);
-Route::post('/login', [UserController::classs, 'login']);
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
 
 Route::get('mobiles', [MobileController::class, 'index']);
 Route::get('mobile/{id}', [MobileController::class, 'show']);

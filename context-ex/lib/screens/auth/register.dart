@@ -162,37 +162,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                 vertical: 15,
                               ),
                             ),
-                            onPressed: () async {
+                            onPressed: () {
                               if (_key.currentState!.validate()) {
                                 _key.currentState!.save();
                                 _regApi(currentAuthState);
-
-                                final redirectRoute =
-                                    currentAuthState.redirectRoute;
-
-                                if (redirectRoute != null) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                          "Navigating back to $redirectRoute"),
-                                    ),
-                                  );
-                                  await ref
-                                      .read(authStateProvider.notifier)
-                                      .clearRedirectRoute();
-                                  Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    redirectRoute,
-                                    (context) => false,
-                                  );
-                                } else {
-                                  Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    "/",
-                                    (context) => false,
-                                  );
-                                }
-
                                 //sendPhoneNumber();
                               }
                             },
@@ -268,7 +241,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     await ref.read(authStateProvider.notifier).register(regVals);
 
     if (currentAuthState.user != null && mounted) {
-      //Navigator.pop(context);
+      Navigator.pop(context);
     }
   }
 

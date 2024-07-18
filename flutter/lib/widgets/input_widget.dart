@@ -4,6 +4,7 @@ import '../utils/constants.dart';
 
 class InputWidget extends StatelessWidget {
   final Function(String) onSaved;
+  Function(String)? onChanged;
 
   final dynamic Function(String) validator;
   TextInputType? keyboardType;
@@ -15,6 +16,7 @@ class InputWidget extends StatelessWidget {
     this.keyboardType,
     required this.hintText,
     required this.validator,
+    this.onChanged,
     this.obscure,
   });
 
@@ -37,6 +39,7 @@ class InputWidget extends StatelessWidget {
           onSaved: (value) {
             onSaved(value!);
           },
+          onChanged: onChanged ?? (value) {},
           keyboardType: keyboardType ?? TextInputType.name,
           obscureText: obscure ?? false,
           validator: (value) {

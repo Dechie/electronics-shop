@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_shop/models/laptop.dart';
-import 'package:mobile_shop/screens/auth/login.dart';
 import 'package:mobile_shop/screens/cart_screen.dart';
 import 'package:mobile_shop/services/auth/auth_services.dart';
 import 'package:mobile_shop/services/providers/cart_items.dart';
@@ -37,6 +36,23 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
   DraggableScrollableController sheetController =
       DraggableScrollableController();
 
+  void addProductToCart(WidgetRef ref) {
+    final wasAdded =
+        ref.read(cartItemsProvider.notifier).addItemToCart(product);
+    setState(() {
+      itsAdded = wasAdded;
+    });
+
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          wasAdded ? 'Successully added to cart' : 'Removed From cart',
+        ),
+      ),
+    );
+  }
+
   //authState =
   @override
   Widget build(BuildContext context) {
@@ -58,6 +74,9 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                 onPressed: () async {
                   await ref.read(authStateProvider.notifier).checkAuthed();
                   if (authState.user == null) {
+                    ref
+                        .read(authStateProvider.notifier)
+                        .setRedirectRoute("/product-detail");
                     ScaffoldMessenger.of(context).clearSnackBars();
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
@@ -66,27 +85,14 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                     );
                     if (mounted) {
                       // ignore: use_build_context_synchronously
-                      navigate(context, const LoginScreen());
+                      //navigate(context, const LoginScreen());
+                      //navigate(context, const RegisterScreen());
+                      Navigator.pushNamed(context, "/register");
                     }
-                    return;
+                    //return;
+                  } else {
+                    addProductToCart(ref);
                   }
-                  final wasAdded = ref
-                      .read(cartItemsProvider.notifier)
-                      .addItemToCart(product);
-                  setState(() {
-                    itsAdded = wasAdded;
-                  });
-
-                  ScaffoldMessenger.of(context).clearSnackBars();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        wasAdded
-                            ? 'Successully added to cart'
-                            : 'Removed From cart',
-                      ),
-                    ),
-                  );
                 },
                 child: authState.isLoading
                     ? const CircularProgressIndicator()

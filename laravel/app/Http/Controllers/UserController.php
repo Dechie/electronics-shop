@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -28,7 +31,7 @@ class UserController extends Controller
             'name' => $user->name,
             'phone'=> $user->phone, 
             'cardNumber' => $user->cardNumber, 
-            'tokan' => $user->token,
+            'token' => $token,
         ], 201);
         
     }

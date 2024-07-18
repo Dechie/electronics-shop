@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mobile_shop/screens/detail%20screen/detail_screen.dart';
+import 'package:mobile_shop/screens/detail-screen/detail_screen.dart';
 import 'package:mobile_shop/services/providers/all_favorites.dart';
 import 'package:mobile_shop/utils/constants.dart';
 import 'package:mobile_shop/utils/method_utils.dart';

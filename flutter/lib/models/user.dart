@@ -1,5 +1,3 @@
-
-
 class User {
   final String name;
   final String phone;
@@ -16,6 +14,7 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
+    print(json);
     return User(
       name: json['name'],
       phone: json['phone'],
