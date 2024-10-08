@@ -1,6 +1,6 @@
 # electronics-shop
 
-e-commerce mobile and laptos shop app written with flutter riverpod and laravel backend api.
+e-commerce mobile and laptops shop app written with flutter riverpod and laravel backend api.
 
 demos: 
 ![Home Page](demos/homepage.jpg)
