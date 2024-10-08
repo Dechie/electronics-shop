@@ -21,6 +21,8 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     //shPref.remove("authState");
     // reset this to check
     final jsonValue = json.decode(shPref.getString('authState') ?? "{}");
+    print("current auth state:");
+    print(jsonValue);
 
     if (jsonValue != null) {
       state = AuthState.fromJson(jsonValue);

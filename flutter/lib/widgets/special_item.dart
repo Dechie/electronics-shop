@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_shop/utils/constants.dart';
 import 'package:mobile_shop/models/mobile.dart';
+import 'package:mobile_shop/utils/constants.dart';
 import 'package:mobile_shop/widgets/custom_text.dart';
 
 class SpecialMobileItem extends StatelessWidget {
+  final Mobile mobile;
+
   const SpecialMobileItem({
-    Key? key,
+    super.key,
     required this.mobile,
   });
-
-  final Mobile mobile;
 
   @override
   Widget build(BuildContext context) {

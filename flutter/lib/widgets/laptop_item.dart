@@ -98,6 +98,7 @@ class _ElementaryLaptopItemState extends ConsumerState<ElementaryLaptopItem> {
                             ScaffoldMessenger.of(context).clearSnackBars();
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
+                                elevation: 5,
                                 content: Text(
                                   wasAdded
                                       ? 'Successully added to favorites'

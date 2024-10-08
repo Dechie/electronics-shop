@@ -8,7 +8,7 @@ final cartItemsProvider =
 class CartItemsNotifier extends StateNotifier<List<dynamic>> {
   CartItemsNotifier() : super([]);
 
-  bool addItemToCart(dynamic item) {
+  bool addOrRemoveItemInCart(dynamic item) {
     if (!state.contains(item)) {
       state = [...state, item];
       return true;

@@ -173,6 +173,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                 if (redirectRoute != null) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
+                                      elevation: 5,
                                       content: Text(
                                           "Navigating back to $redirectRoute"),
                                     ),

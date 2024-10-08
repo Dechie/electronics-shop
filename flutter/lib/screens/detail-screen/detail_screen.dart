@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_shop/models/laptop.dart';
 import 'package:mobile_shop/screens/cart_screen.dart';
+import 'package:mobile_shop/screens/home_screen.dart';
 import 'package:mobile_shop/services/auth/auth_services.dart';
 import 'package:mobile_shop/services/providers/cart_items.dart';
 import 'package:mobile_shop/utils/method_utils.dart';
@@ -38,7 +39,7 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
 
   void addProductToCart(WidgetRef ref) {
     final wasAdded =
-        ref.read(cartItemsProvider.notifier).addItemToCart(product);
+        ref.read(cartItemsProvider.notifier).addOrRemoveItemInCart(product);
     setState(() {
       itsAdded = wasAdded;
     });
@@ -128,7 +129,13 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
               top: 15,
               left: 15,
               child: GestureDetector(
-                onTap: () => Navigator.pop(context),
+                onTap: () => Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HomeScreen(),
+                  ),
+                  (context) => false,
+                ),
                 child: SizedBox(
                   width: 40,
                   height: 40,

@@ -111,17 +111,51 @@ class _CartScreenState extends ConsumerState<CartScreen> {
     priceStr = '${priceStr.substring(0, 2)},${priceStr.substring(2)}';
     priceStr += " Birr";
     subWidgets = [
+      SizedBox(
+        width: double.infinity,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            PopupMenuButton<int>(
+              onSelected: (value) {
+                if (value == 1) {
+                  ref
+                      .read(cartItemsProvider.notifier)
+                      .addOrRemoveItemInCart(item);
+                }
+              },
+              itemBuilder: (context) {
+                return <PopupMenuEntry<int>>[
+                  const PopupMenuItem<int>(
+                    value: 1,
+                    child: Text("Remove"),
+                  )
+                ];
+              },
+            ),
+          ],
+        ),
+      ),
       Padding(
         padding: const EdgeInsets.only(top: 5.0, right: 5.0, left: 5.0),
-        child: Text(
-          item.title,
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontSize: 14.0,
-            fontWeight: FontWeight.bold,
+        child: SizedBox(
+          width: double.infinity,
+          child: Row(
+            children: [
+              Text(
+                item.title,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              //const Spacer(),
+            ],
           ),
         ),
       ),
+
       ...specs.entries.take(2).map(
         (entry) {
           int len = max(entry.key.length, entry.value.length);
@@ -199,7 +233,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
               borderRadius: BorderRadius.all(Radius.circular(5.0)),
             ),
             child: SizedBox(
-              height: 145,
+              height: 155,
               child: Row(
                 children: <Widget>[
                   ClipRRect(

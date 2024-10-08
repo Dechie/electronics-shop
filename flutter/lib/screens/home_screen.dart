@@ -84,15 +84,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
         itemBuilder: (context, index) => FilledButton(
-          style: const ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll<Color>(mainredMoreBlacked),
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll<Color>(
+              current == index ? mainredMoreBlacked : Colors.white,
+            ),
+            side: const WidgetStatePropertyAll<BorderSide>(
+              BorderSide(
+                width: 2,
+                color: mainredMoreBlacked,
+              ),
+            ),
           ),
           onPressed: () {
             setState(() {
               current = index;
             });
           },
-          child: Text(categories[index]),
+          child: Text(
+            categories[index],
+            style: TextStyle(
+              color: current == index ? Colors.white : mainredMoreBlacked,
+            ),
+          ),
         ),
         separatorBuilder: (context, index) => const SizedBox(width: 10),
       ),
